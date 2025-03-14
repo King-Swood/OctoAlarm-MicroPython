@@ -1,6 +1,8 @@
 from Button import Button
 import HAL
 
+# if the file is called main.py, it will run automatically when the target device boots.
+
 HAL.init()
 
 led_state = False
