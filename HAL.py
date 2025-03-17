@@ -1,3 +1,5 @@
+"""Hardware abstraction layer."""
+
 import time
 import sys
 
@@ -24,7 +26,9 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
         
         def set_heartbeat(self, value):
             self.heartbeat.setChecked(value)
-
+        
+        def read_button(self):
+            return self.button.isDown()
 
     def run(setup, loop):
         app = QtWidgets.QApplication([])
@@ -42,7 +46,8 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
         return int(time.clock_gettime(time.CLOCK_MONOTONIC) * 1000.0)
     
     def read_button():
-        return False
+        global sim
+        return sim.read_button()
     
     def set_led(value):
         global sim
@@ -62,6 +67,12 @@ else:
         global button_pin
         button_pin = machine.Pin(BUTTON_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
         return
+
+    def run(setup, loop):
+        init()
+        setup()
+        while True:
+            loop()
 
     def get_ms():
         return time.ticks_ms()
