@@ -19,6 +19,8 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
             self.layout.addWidget(self.heartbeat)
             self.button = QtWidgets.QPushButton("")
             self.layout.addWidget(self.button)
+            self.resize(400,300)
+            self.setWindowTitle("OctoAlarm Python Sim")
 
             self.timer = QTimer(self)
             self.timer.timeout.connect(lambda: self.main_loop())
@@ -26,6 +28,9 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
         
         def set_heartbeat(self, value):
             self.heartbeat.setChecked(value)
+        
+        def set_led(self, value):
+            return
         
         def read_button(self):
             return self.button.isDown()
@@ -49,9 +54,14 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
         global sim
         return sim.read_button()
     
-    def set_led(value):
+    # TODO set_led will need to take an analog value.
+    def set_heartbeat(value):
         global sim
         sim.set_heartbeat(value)
+    
+    def set_led(value):
+        global sim
+        sim.set_led(value)
 else:
     # MicroPython
     import machine
@@ -81,5 +91,8 @@ else:
         return not button_pin.value()
     
     def set_led(value):
+        return
+    
+    def set_heartbeat(value):
         led_onboard.value(value)
         return
