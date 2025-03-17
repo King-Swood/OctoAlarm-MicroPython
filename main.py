@@ -1,16 +1,24 @@
+"""Main entry to the application."""
+
 from Button import Button
 import HAL
 
 # if the file is called main.py, it will run automatically when the target device boots.
 
-HAL.init()
-
 led_state = False
-HAL.set_led(led_state)
+button = None
 
-button = Button(lambda: HAL.read_button())
+def setup():
+    global led_state
+    global button
 
-while True:
+    HAL.set_led(led_state)
+    button = Button(HAL.read_button)
+
+def loop():
+    global led_state
+    global button
+    
     button.update()
     
     if button.just_released():
@@ -22,3 +30,4 @@ while True:
         led_state = not led_state
         HAL.set_led(led_state)
 
+HAL.run(setup, loop)
