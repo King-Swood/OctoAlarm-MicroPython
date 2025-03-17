@@ -1,5 +1,5 @@
 from Button import Button
-import HAL
+import hal
 from Heartbeat import Heartbeat
 import Globals
 from StartupPattern import StartupPattern
@@ -10,16 +10,16 @@ class App():
     def __init__(self):
         print("OctoAlarm MicroPython Version " + Globals.Version + "\n")
 
-        self.button = Button(HAL.read_button)
-        self.heartbeat = Heartbeat(lambda x: HAL.set_heartbeat(x))
+        self.button = Button(hal.read_button)
+        self.heartbeat = Heartbeat(lambda x: hal.set_heartbeat(x))
         self.startupPattern = StartupPattern(self.startup_pattern_set)
 
     @staticmethod
     def startup_pattern_set(value):
-        if (value > 0):
-            HAL.set_led(255)
+        if value > 0:
+            hal.set_led(255)
         else:
-            HAL.set_led(0)
+            hal.set_led(0)
 
     def loop(self):
         self.heartbeat.update()
@@ -28,18 +28,18 @@ class App():
         if not self.startupPattern.is_finished():
             self.startupPattern.update()
         else:
-            HAL.set_led(128)
-        
+            hal.set_led(128)
+
         # if button.just_released():
         #     led_state = not led_state
         #     HAL.set_led(led_state)
-        
+
         # if button.is_held(500):
         #     button.restart_held()
         #     led_state = not led_state
         #     HAL.set_led(led_state)
 
-app = None
+app: App
 
 def setup():
     global app
@@ -49,4 +49,4 @@ def loop():
     global app
     app.loop()
 
-HAL.run(setup, loop)
+hal.run(setup, loop)
