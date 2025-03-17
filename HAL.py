@@ -18,6 +18,7 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
             self.heartbeat = QtWidgets.QCheckBox("Heartbeat LED")
             self.layout.addWidget(self.heartbeat)
             self.button = QtWidgets.QPushButton("")
+            self.button.setStyleSheet('background-color: rgb(0,0,0)')
             self.layout.addWidget(self.button)
             self.resize(400,300)
             self.setWindowTitle("OctoAlarm Python Sim")
@@ -30,6 +31,7 @@ if (sys.platform == "linux") or (sys.platform == "win32"):
             self.heartbeat.setChecked(value)
         
         def set_led(self, value):
+            self.button.setStyleSheet(f'background-color: rgb({value},{value},{value})')
             return
         
         def read_button(self):
