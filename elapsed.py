@@ -1,14 +1,14 @@
 import hal
 
-class Elapsed:
+class _Elapsed:
     def __init__(self):
-        self.last_time_ = hal.get_ms()
+        self.last_time_ = self.get_time()
 
     def restart(self):
-        self.last_time_ = hal.get_ms()
+        self.last_time_ = self.get_time()
 
     def has_elapsed(self, ms):
-        if (hal.get_ms() - self.last_time_) >= ms:
+        if (self.get_time() - self.last_time_) >= ms:
             return True
         return False
 
@@ -17,3 +17,14 @@ class Elapsed:
             self.restart()
             return True
         return False
+
+    def get_time(self) -> int:
+        return 0
+
+class ElapsedMS(_Elapsed):
+    def get_time(self) -> int:
+        return hal.get_ms()
+
+class ElapsedUS(_Elapsed):
+    def get_time(self) -> int:
+        return hal.get_us()

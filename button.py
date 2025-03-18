@@ -1,4 +1,4 @@
-from elapsed import Elapsed
+from elapsed import ElapsedMS
 from debounce import Debounce
 
 class Button:
@@ -7,7 +7,7 @@ class Button:
         self.pressed_ = False
         self.last_pressed_ = False
         self.debounced_state_ = Debounce()
-        self.pressed_timer_ = Elapsed()
+        self.pressed_timer_ = ElapsedMS()
 
     def update(self):
         self.last_pressed_ = self.pressed_

@@ -1,4 +1,4 @@
-from elapsed import Elapsed
+from elapsed import ElapsedMS
 
 class StartupPattern():
     DATA = [(1000,50),
@@ -9,7 +9,7 @@ class StartupPattern():
     def __init__(self, set_frequency):
         global DATA
         self.set_frequency = set_frequency
-        self.elapsed = Elapsed()
+        self.elapsed = ElapsedMS()
         self.index = 0
         self.set_frequency(self.DATA[self.index][0])
         self.finished = False

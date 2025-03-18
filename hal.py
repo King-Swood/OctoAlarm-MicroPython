@@ -13,6 +13,9 @@ def run(setup, loop):
 def get_ms() -> int:
     return hal_impl.get_ms()
 
+def get_us() -> int:
+    return hal_impl.get_us()
+
 def read_button() -> bool:
     return hal_impl.read_button()
 

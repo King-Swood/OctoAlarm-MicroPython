@@ -67,6 +67,9 @@ sim: Sim
 def get_ms() -> int:
     return int(time.clock_gettime(time.CLOCK_MONOTONIC) * 1000.0)
 
+def get_us() -> int:
+    return int(time.clock_gettime(time.CLOCK_MONOTONIC) * 1000000.0)
+
 def read_button() -> bool:
     global sim
     return sim.read_button()

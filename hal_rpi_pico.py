@@ -26,6 +26,9 @@ def run(setup, loop):
 def get_ms():
     return time.ticks_ms()
 
+def get_us():
+    return time.ticks_us()
+
 def read_button():
     return not button_pin.value()
 
