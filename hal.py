@@ -27,3 +27,6 @@ def set_led(value: int):
 
 def set_beeper(freq: int):
     hal_impl.set_beeper(freq)
+
+def allow_siren() -> bool:
+    return hal_impl.allow_siren()

@@ -40,13 +40,13 @@ class Sim (QtWidgets.QWidget):
             self.beep_instance = None
             return
 
+        sa.stop_all()
         sample_rate = 44100
         t_mult = 0.25
         t = np.linspace(0, t_mult, int(t_mult * sample_rate), False)
         self.sin_wave = np.sin(freq * t * 2 * np.pi)
         self.sin_wave *= 32767 / np.max(np.abs(self.sin_wave))
         self.sin_wave = self.sin_wave.astype(np.int16)
-
         self.beep_instance = sa.play_buffer(self.sin_wave, 1, 2, sample_rate)
         return
 
@@ -85,3 +85,6 @@ def set_led(value: int):
 def set_beeper(freq: int):
     global sim
     sim.set_beeper(freq)
+
+def allow_siren() -> bool:
+    return False
