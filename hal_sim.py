@@ -20,14 +20,14 @@ class Sim (QtWidgets.QWidget):
         self.timer.timeout.connect(lambda: self.main_loop())
         self.timer.start(0)
 
-    def set_heartbeat(self, value):
+    def set_heartbeat(self, value: bool):
         self.heartbeat.setChecked(value)
 
-    def set_led(self, value):
+    def set_led(self, value: int):
         self.button.setStyleSheet(f'background-color: rgb({value},{value},{value})')
         return
 
-    def read_button(self):
+    def read_button(self) -> bool:
         return self.button.isDown()
 
 def run(setup, loop):
@@ -44,18 +44,17 @@ def run(setup, loop):
 
 sim: Sim
 
-def get_ms():
+def get_ms() -> int:
     return int(time.clock_gettime(time.CLOCK_MONOTONIC) * 1000.0)
 
-def read_button():
+def read_button() -> bool:
     global sim
     return sim.read_button()
 
-# TODO set_led will need to take an analog value.
-def set_heartbeat(value):
+def set_heartbeat(value: bool):
     global sim
     sim.set_heartbeat(value)
 
-def set_led(value):
+def set_led(value: int):
     global sim
     sim.set_led(value)

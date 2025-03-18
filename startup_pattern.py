@@ -1,4 +1,4 @@
-from Elapsed import Elapsed
+from elapsed import Elapsed
 
 class StartupPattern():
     DATA = [(1000,50),
@@ -6,18 +6,18 @@ class StartupPattern():
             (1000,50),
             (0,500)]
 
-    def __init__(self, setFrequency):
+    def __init__(self, set_frequency):
         global DATA
-        self.setFrequency = setFrequency
+        self.set_frequency = set_frequency
         self.elapsed = Elapsed()
         self.index = 0
-        self.setFrequency(self.DATA[self.index][0])
+        self.set_frequency(self.DATA[self.index][0])
         self.finished = False
 
     def update(self):
         if self.finished:
             return
-        
+
         item = self.DATA[self.index]
 
         if self.elapsed.has_elapsed_restart(item[1]):
@@ -26,7 +26,7 @@ class StartupPattern():
                 self.finished = True
             else:
                 item = self.DATA[self.index]
-                self.setFrequency(item[0])
+                self.set_frequency(item[0])
 
     def is_finished(self):
         return self.finished

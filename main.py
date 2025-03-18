@@ -1,18 +1,18 @@
-from Button import Button
+from button import Button
 import hal
-from Heartbeat import Heartbeat
-import Globals
-from StartupPattern import StartupPattern
+from heartbeat import Heartbeat
+import app_globals
+from startup_pattern import StartupPattern
 
-# if the file is called main.py, it will run automatically when the target device boots.
+# Since the file is called main.py, it will run automatically when the target device boots.
 
 class App():
     def __init__(self):
-        print("OctoAlarm MicroPython Version " + Globals.Version + "\n")
+        print("OctoAlarm MicroPython Version " + app_globals.VERSION + "\n")
 
         self.button = Button(hal.read_button)
         self.heartbeat = Heartbeat(lambda x: hal.set_heartbeat(x))
-        self.startupPattern = StartupPattern(self.startup_pattern_set)
+        self.startup_pattern = StartupPattern(self.startup_pattern_set)
 
     @staticmethod
     def startup_pattern_set(value):
@@ -25,8 +25,8 @@ class App():
         self.heartbeat.update()
         self.button.update()
 
-        if not self.startupPattern.is_finished():
-            self.startupPattern.update()
+        if not self.startup_pattern.is_finished():
+            self.startup_pattern.update()
         else:
             hal.set_led(128)
 
