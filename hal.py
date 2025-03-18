@@ -21,3 +21,6 @@ def set_heartbeat(value: bool):
 
 def set_led(value: int):
     hal_impl.set_led(value)
+
+def set_beeper(freq: int):
+    hal_impl.set_beeper(freq)

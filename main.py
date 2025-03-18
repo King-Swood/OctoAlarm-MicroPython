@@ -16,10 +16,8 @@ class App():
 
     @staticmethod
     def startup_pattern_set(value):
-        if value > 0:
-            hal.set_led(255)
-        else:
-            hal.set_led(0)
+        hal.set_led(255 if value > 0 else 0)
+        hal.set_beeper(value)
 
     def loop(self):
         self.heartbeat.update()

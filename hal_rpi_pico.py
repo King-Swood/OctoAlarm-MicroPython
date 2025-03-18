@@ -35,3 +35,7 @@ def set_led(value):
 def set_heartbeat(value):
     led_onboard.value(value)
     return
+
+def set_beeper(freq: int):
+    # TODO: Need to add beeper functionality
+    return

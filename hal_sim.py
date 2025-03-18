@@ -30,6 +30,9 @@ class Sim (QtWidgets.QWidget):
     def read_button(self) -> bool:
         return self.button.isDown()
 
+    def set_beeper(self, freq: int):
+        return
+
 def run(setup, loop):
     app = QtWidgets.QApplication([])
 
@@ -58,3 +61,7 @@ def set_heartbeat(value: bool):
 def set_led(value: int):
     global sim
     sim.set_led(value)
+
+def set_beeper(freq: int):
+    global sim
+    sim.set_beeper(freq)
