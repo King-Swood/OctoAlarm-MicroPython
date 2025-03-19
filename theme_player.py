@@ -43,16 +43,15 @@ class ThemePlayer:
         first_time = self.state != self.last_state
         self.last_state = self.state
 
-        match self.state:
-            case self.State.PLAY_NOTE:
-                if first_time:
-                    self.elapsed.restart()
-                    self.set_freq(self.theme[self.index][0])
+        if self.state == self.State.PLAY_NOTE:
+            if first_time:
+                self.elapsed.restart()
+                self.set_freq(self.theme[self.index][0])
 
-                if self.elapsed.has_elapsed_restart(self.theme[self.index][1]):
-                    self.index += 1
-                    self.state = self.State.PAUSE
-            case self.State.PAUSE:
+            if self.elapsed.has_elapsed_restart(self.theme[self.index][1]):
+                self.index += 1
+                self.state = self.State.PAUSE
+        elif self.state == self.State.PAUSE:
                 if first_time:
                     self.elapsed.restart()
                     self.set_freq(0)

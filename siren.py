@@ -24,19 +24,18 @@ class Siren():
         first_time = self.state != self.last_state
         self.last_state = self.state
 
-        match self.state:
-            case self.State.INCREASING:
-                if first_time:
-                    self.current_freq = 0
-                    self.timer.restart()
-                if self.timer.has_elapsed_restart(self.update_period_us):
-                    if self.current_freq < self.FREQ_HIGH:
-                        self.current_freq += 1
-                    else:
-                        self.state = self.State.PAUSE
-                self.set_freq(self.current_freq)
-            case self.State.PAUSE:
-                if first_time:
-                    self.timer.restart()
-                if self.timer.has_elapsed(self.pause_us):
-                    self.state = self.State.INCREASING
+        if self.state == self.State.INCREASING:
+            if first_time:
+                self.current_freq = 0
+                self.timer.restart()
+            if self.timer.has_elapsed_restart(self.update_period_us):
+                if self.current_freq < self.FREQ_HIGH:
+                    self.current_freq += 1
+                else:
+                    self.state = self.State.PAUSE
+            self.set_freq(self.current_freq)
+        elif self.state == self.State.PAUSE:
+            if first_time:
+                self.timer.restart()
+            if self.timer.has_elapsed(self.pause_us):
+                self.state = self.State.INCREASING

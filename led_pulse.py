@@ -25,34 +25,33 @@ class LEDPulse():
         first_time = self.state != self.last_state
         self.last_state = self.state
 
-        match self.state:
-            case self.State.INCREASING:
-                if first_time:
-                    self.pwm_value = 0
-                    self.timer.restart()
-                if self.timer.has_elapsed_restart(self.update_period_us):
-                    if self.pwm_value < self.MAX_PWM:
-                        self.pwm_value += 1
-                    else:
-                        self.state = self.State.PAUSEBRIGHT
-                self.set_output(self.pwm_value)
-            case self.State.PAUSEBRIGHT:
-                if first_time:
-                    self.timer.restart()
-                if self.timer.has_elapsed(self.pause_us):
-                    self.state = self.State.DECREASING
-            case self.State.DECREASING:
-                if first_time:
-                    self.pwm_value = self.MAX_PWM
-                    self.timer.restart()
-                if self.timer.has_elapsed_restart(self.update_period_us):
-                    if self.pwm_value > 0:
-                        self.pwm_value -= 1
-                    else:
-                        self.state = self.State.PAUSEOFF
-                self.set_output(self.pwm_value)
-            case self.State.PAUSEOFF:
-                if first_time:
-                    self.timer.restart()
-                if self.timer.has_elapsed(self.pause_us):
-                    self.state = self.State.INCREASING
+        if self.state == self.State.INCREASING:
+            if first_time:
+                self.pwm_value = 0
+                self.timer.restart()
+            if self.timer.has_elapsed_restart(self.update_period_us):
+                if self.pwm_value < self.MAX_PWM:
+                    self.pwm_value += 1
+                else:
+                    self.state = self.State.PAUSEBRIGHT
+            self.set_output(self.pwm_value)
+        elif self.state == self.State.PAUSEBRIGHT:
+            if first_time:
+                self.timer.restart()
+            if self.timer.has_elapsed(self.pause_us):
+                self.state = self.State.DECREASING
+        elif self.state == self.State.DECREASING:
+            if first_time:
+                self.pwm_value = self.MAX_PWM
+                self.timer.restart()
+            if self.timer.has_elapsed_restart(self.update_period_us):
+                if self.pwm_value > 0:
+                    self.pwm_value -= 1
+                else:
+                    self.state = self.State.PAUSEOFF
+            self.set_output(self.pwm_value)
+        elif self.state == self.State.PAUSEOFF:
+            if first_time:
+                self.timer.restart()
+            if self.timer.has_elapsed(self.pause_us):
+                self.state = self.State.INCREASING

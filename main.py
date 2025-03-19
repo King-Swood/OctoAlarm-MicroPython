@@ -47,47 +47,46 @@ class App():
         first_time = self.state != self.last_state
         self.last_state = self.state
 
-        match self.state:
-            case State.STARTUP:
-                if first_time:
-                    self.startup_pattern = StartupPattern(self.startup_pattern_set)
-                if self.startup_pattern.is_finished():
-                    self.state = State.IDLE
-                else:
-                    self.startup_pattern.update()
-            case State.IDLE:
-                if first_time:
-                    hal.set_beeper(0)
-                    hal.set_led(128)
-                if self.button.just_released():
-                    self.state = State.ALARMING
-                if self.button.is_held(BUTTON_HOLD_MS):
-                    self.state = State.TUNE
-            case State.ALARMING:
-                if first_time:
-                    self.led_pulse = LEDPulse(lambda x: hal.set_led(x), 2000)
-                    if hal.allow_siren():
-                        self.siren = Siren(lambda x: hal.set_beeper(x), 3000)
-                self.led_pulse.update()
+        if self.state == State.STARTUP:
+            if first_time:
+                self.startup_pattern = StartupPattern(self.startup_pattern_set)
+            if self.startup_pattern.is_finished():
+                self.state = State.IDLE
+            else:
+                self.startup_pattern.update()
+        elif self.state == State.IDLE:
+            if first_time:
+                hal.set_beeper(0)
+                hal.set_led(128)
+            if self.button.just_released():
+                self.state = State.ALARMING
+            if self.button.is_held(BUTTON_HOLD_MS):
+                self.state = State.TUNE
+        elif self.state == State.ALARMING:
+            if first_time:
+                self.led_pulse = LEDPulse(lambda x: hal.set_led(x), 2000)
                 if hal.allow_siren():
-                    self.siren.update()
-                if self.button.just_released():
+                    self.siren = Siren(lambda x: hal.set_beeper(x), 3000)
+            self.led_pulse.update()
+            if hal.allow_siren():
+                self.siren.update()
+            if self.button.just_released():
+                self.state = State.IDLE
+        elif self.state == State.TUNE:
+            if first_time:
+                self.released_in_theme_state = False
+                self.theme_player = ThemePlayer(lambda x: hal.set_beeper(x), theme.THEME)
+
+            self.theme_player.update()
+
+            if self.theme_player.is_finished():
+                self.state = State.IDLE
+
+            if self.button.just_released():
+                if not self.released_in_theme_state:
+                    self.released_in_theme_state = True
+                else:
                     self.state = State.IDLE
-            case State.TUNE:
-                if first_time:
-                    self.released_in_theme_state = False
-                    self.theme_player = ThemePlayer(lambda x: hal.set_beeper(x), theme.THEME)
-
-                self.theme_player.update()
-
-                if self.theme_player.is_finished():
-                    self.state = State.IDLE
-
-                if self.button.just_released():
-                    if not self.released_in_theme_state:
-                        self.released_in_theme_state = True
-                    else:
-                        self.state = State.IDLE
 
 app: App
 
