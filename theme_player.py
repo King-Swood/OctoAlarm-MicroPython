@@ -1,5 +1,4 @@
 from collections.abc import Callable
-from enum import Enum, auto
 from elapsed import ElapsedMS
 
 # A theme is a list of tuple[int,int]
@@ -23,11 +22,10 @@ NOTE_DS6 = 1244
 NOTE_E6 = 1318
 
 class ThemePlayer:
-    class State(Enum):
-        PLAY_NOTE = auto(),
-        PAUSE = auto(),
-        FINISHED = auto(),
-        SIZE = auto()
+    STATE_PLAY_NOTE = 0
+    STATE_PAUSE = 1
+    STATE_FINISHED = 2
+    STATE_SIZE = 3
 
     PAUSE_TIME = 50
 
@@ -36,30 +34,30 @@ class ThemePlayer:
         self.theme = theme
         self.elapsed = ElapsedMS()
         self.index = 0
-        self.state = self.State.PLAY_NOTE
-        self.last_state = self.State.SIZE
+        self.state = self.STATE_PLAY_NOTE
+        self.last_state = self.STATE_SIZE
 
     def update(self):
         first_time = self.state != self.last_state
         self.last_state = self.state
 
-        if self.state == self.State.PLAY_NOTE:
+        if self.state == self.STATE_PLAY_NOTE:
             if first_time:
                 self.elapsed.restart()
                 self.set_freq(self.theme[self.index][0])
 
             if self.elapsed.has_elapsed_restart(self.theme[self.index][1]):
                 self.index += 1
-                self.state = self.State.PAUSE
-        elif self.state == self.State.PAUSE:
+                self.state = self.STATE_PAUSE
+        elif self.state == self.STATE_PAUSE:
                 if first_time:
                     self.elapsed.restart()
                     self.set_freq(0)
                 if self.elapsed.has_elapsed_restart(self.PAUSE_TIME):
                     if self.index >= len(self.theme):
-                        self.state = self.State.FINISHED
+                        self.state = self.STATE_FINISHED
                     else:
-                        self.state = self.State.PLAY_NOTE
+                        self.state = self.STATE_PLAY_NOTE
 
     def is_finished(self):
-        return self.state == self.State.FINISHED
+        return self.state == self.STATE_FINISHED
