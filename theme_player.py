@@ -1,4 +1,3 @@
-from collections.abc import Callable
 from elapsed import ElapsedMS
 
 # A theme is a list of tuple[int,int]
@@ -29,7 +28,8 @@ class ThemePlayer:
 
     PAUSE_TIME = 50
 
-    def __init__(self, set_freq: Callable[[int], None], theme: list[tuple[int, int]]):
+    # set_freq must be a callable that takes an int and returns None
+    def __init__(self, set_freq, theme: list[tuple[int, int]]):
         self.set_freq = set_freq
         self.theme = theme
         self.elapsed = ElapsedMS()

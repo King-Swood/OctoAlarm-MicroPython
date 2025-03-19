@@ -42,3 +42,7 @@ def set_heartbeat(value):
 def set_beeper(freq: int):
     # TODO: Need to add beeper functionality
     return
+
+def allow_siren() -> bool:
+    return True
+

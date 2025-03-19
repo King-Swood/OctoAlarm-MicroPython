@@ -1,4 +1,3 @@
-from collections.abc import Callable
 from elapsed import ElapsedUS
 
 class Siren():
@@ -9,7 +8,8 @@ class Siren():
     FREQ_LOW = 300
     FREQ_HIGH = 600
 
-    def __init__(self, set_freq: Callable[[int],None], update_period_us: int):
+    # set_freq must be a callable that takes an int and returns None
+    def __init__(self, set_freq, update_period_us: int):
         self.set_freq = set_freq
         self.update_period_us = update_period_us
         self.state = self.STATE_INCREASING

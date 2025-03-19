@@ -1,4 +1,3 @@
-from collections.abc import Callable
 from elapsed import ElapsedUS
 
 class LEDPulse():
@@ -10,7 +9,8 @@ class LEDPulse():
 
     MAX_PWM = 255
 
-    def __init__(self, set_output: Callable[[int],None], update_period_us: int):
+    # set_output must be a callable that takes an int and returns None
+    def __init__(self, set_output, update_period_us: int):
         self.set_output = set_output
         self.update_period_us = update_period_us
         self.state = self.STATE_INCREASING
