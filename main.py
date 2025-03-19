@@ -6,6 +6,8 @@ import app_globals
 from startup_pattern import StartupPattern
 from led_pulse import LEDPulse
 from siren import Siren
+from theme_player import ThemePlayer
+import theme
 
 # Since the file is called main.py, it will run automatically when the target device boots.
 
@@ -13,7 +15,10 @@ class State(Enum):
     STARTUP = auto(),
     IDLE = auto(),
     ALARMING = auto(),
+    TUNE = auto(),
     SIZE = auto()
+
+BUTTON_HOLD_MS = 1000
 
 class App():
 
@@ -27,6 +32,8 @@ class App():
         self.siren: Siren
         self.state = State.STARTUP
         self.last_state = State.SIZE
+        self.released_in_theme_state = False
+        self.theme_player: ThemePlayer
 
     @staticmethod
     def startup_pattern_set(value):
@@ -54,6 +61,8 @@ class App():
                     hal.set_led(128)
                 if self.button.just_released():
                     self.state = State.ALARMING
+                if self.button.is_held(BUTTON_HOLD_MS):
+                    self.state = State.TUNE
             case State.ALARMING:
                 if first_time:
                     self.led_pulse = LEDPulse(lambda x: hal.set_led(x), 2000)
@@ -64,6 +73,21 @@ class App():
                     self.siren.update()
                 if self.button.just_released():
                     self.state = State.IDLE
+            case State.TUNE:
+                if first_time:
+                    self.released_in_theme_state = False
+                    self.theme_player = ThemePlayer(lambda x: hal.set_beeper(x), theme.THEME)
+
+                self.theme_player.update()
+
+                if self.theme_player.is_finished():
+                    self.state = State.IDLE
+
+                if self.button.just_released():
+                    if not self.released_in_theme_state:
+                        self.released_in_theme_state = True
+                    else:
+                        self.state = State.IDLE
 
 app: App
 

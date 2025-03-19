@@ -23,7 +23,7 @@ class Siren():
     def update(self):
         first_time = self.state != self.last_state
         self.last_state = self.state
-        
+
         match self.state:
             case self.State.INCREASING:
                 if first_time:

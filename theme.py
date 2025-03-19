@@ -1,0 +1,66 @@
+import theme_player as tp
+
+THEME = [
+    (tp.NOTE_E5, tp.QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (tp.NOTE_G5, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_B4, tp.SEMI_QUAVER),
+
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_B4, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_D5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_B4, tp.SEMI_QUAVER),
+    (tp.NOTE_D5, tp.QUAVER),
+
+    (tp.NOTE_E5, tp.QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (tp.NOTE_G5, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_AS5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_B5, tp.SEMI_QUAVER),
+    (0, tp.QUAVER),
+    (0, tp.QUAVER),
+
+    (tp.NOTE_A5, tp.QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+    (tp.NOTE_C6, tp.SEMI_QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_G5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_E5, tp.SEMI_QUAVER),
+    (tp.NOTE_G5, tp.SEMI_QUAVER),
+    (tp.NOTE_GS5, tp.SEMI_QUAVER),
+
+    (tp.NOTE_A5, tp.QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+    (tp.NOTE_C6, tp.SEMI_QUAVER),
+    (tp.NOTE_A5, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_D6, tp.SEMI_QUAVER),
+
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_DS6, tp.SEMI_QUAVER),
+    (0, tp.SEMI_QUAVER),
+    (tp.NOTE_E6, tp.SEMI_QUAVER),
+    (0, tp.QUAVER),
+    (0, tp.QUAVER)
+]

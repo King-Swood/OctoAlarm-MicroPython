@@ -35,14 +35,14 @@ class Sim (QtWidgets.QWidget):
         return self.button.isDown()
 
     def set_beeper(self, freq: int):
-        if (freq <= 0):
+        if freq <= 0:
             sa.stop_all()
             self.beep_instance = None
             return
 
         sa.stop_all()
         sample_rate = 44100
-        t_mult = 0.25
+        t_mult = 10.0
         t = np.linspace(0, t_mult, int(t_mult * sample_rate), False)
         self.sin_wave = np.sin(freq * t * 2 * np.pi)
         self.sin_wave *= 32767 / np.max(np.abs(self.sin_wave))
