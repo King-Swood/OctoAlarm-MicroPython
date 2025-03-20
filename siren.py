@@ -14,7 +14,7 @@ class Siren():
         self.update_period_us = update_period_us
         self.state = self.STATE_INCREASING
         self.last_state = self.STATE_SIZE
-        self.current_freq = 0
+        self.current_freq = self.FREQ_LOW
         self.timer = ElapsedUS()
         self.pause_us = self.update_period_us * 0
 
@@ -24,7 +24,7 @@ class Siren():
 
         if self.state == self.STATE_INCREASING:
             if first_time:
-                self.current_freq = 0
+                self.current_freq = self.FREQ_LOW
                 self.timer.restart()
             if self.timer.has_elapsed_restart(self.update_period_us):
                 if self.current_freq < self.FREQ_HIGH:
