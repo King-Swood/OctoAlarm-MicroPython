@@ -1,0 +1,1 @@
+mpremote fs rm *.py
