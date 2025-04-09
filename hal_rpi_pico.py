@@ -54,7 +54,6 @@ def set_heartbeat(value):
     return
 
 def set_beeper(freq: int):
-    print(freq)
     if freq < 100:
         beeper_pwm.freq(5000)
         beeper_pwm.duty_u16(0)
